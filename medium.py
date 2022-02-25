@@ -1,22 +1,24 @@
-import requests #fetch from html file
 from bs4 import BeautifulSoup #pull the data from html file
+import requests #fetch from html file
 import lxml #parse or translate html to python and manipulated
 import pandas as pd #manipulate the data, print info and save into a file
+import pprint
+import os
 
 # search_url = "https://apps.irs.gov/app/picklist/list/priorFormPublication.html"
 search_url = "https://apps.irs.gov/app/picklist/list/priorFormPublication.html?value=Form+1095-C&criteria=formNumber&submitSearch=Find"
 
 #HTTP GET requests
 page = requests.get(search_url)
-# print(page) #<Response [200]> to test the url and it's ok
+print(page) #<Response [200]> to test the url and it's ok
 
 #Checking if we successfully fetched the URL 
 if page.status_code == requests.codes.ok:
-    # print("we fetch the url")
+    print("we fetch the url")
     # we need to translate it to python
     bs= BeautifulSoup(page.text, "lxml")
     # print(bs)
-    # list_all_forms = bs.findAll("table", class_="picklist-dataTable")
+    list_all_forms = bs.findAll("table", class_="picklist-dataTable")
     list_all_forms = bs.findAll("div", class_="picklistTable")
     # print(list_all_forms)
     # print(len(list_all_forms))
